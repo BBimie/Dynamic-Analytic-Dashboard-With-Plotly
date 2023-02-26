@@ -1,1 +1,2 @@
-.ipynb
+/src/data/raw_data/*.ipynb
+/src/data/raw_data/*.ipynb_checkpoints
