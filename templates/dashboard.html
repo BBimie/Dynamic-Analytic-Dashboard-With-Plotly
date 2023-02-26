@@ -1,9 +1,32 @@
 <!doctype html>
 <html>
 
- <body>
-  <h1></h1>
-  <div id='chart' class='chart'”></div>
+<head>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+
+    <section class="">
+        <h1></h1>
+    </section>
+    <section>
+        <div class="filters">
+            <div>
+                <select name=colours method="GET" action="/">
+                    {% for product in data['product_category'].unique() %}
+                    <option value="{{ product }}" SELECTED>{{ product }}</option>"
+                    {% endfor %}
+                </select>
+            </div>
+
+
+        </div>
+        <div id='chart' class='chart' ”>
+            <div></div>
+        </div>
+    </section>
+
 
 
 
@@ -16,4 +39,5 @@
   var graphs = {{ graphJSON | safe }};
   Plotly.plot('chart',graphs,{});
 </script> -->
+
 </html>
