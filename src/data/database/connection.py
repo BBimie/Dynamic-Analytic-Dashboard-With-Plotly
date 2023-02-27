@@ -13,10 +13,18 @@ class Database:
         conn = None
         try:
             conn = sqlite3.connect(self.db_name)
-            print(sqlite3.version)
+            print('SQLITE VERSION',sqlite3.version)
             return conn
         except Error as e:
             print(e)
+
+    def connect(self):
+        try:
+            conn = sqlite3.connect(self.db_name)
+            return conn
+        except Error as e:
+            print(e)
+
 
     def create_tables(self):
         conn = self.create_db()
@@ -32,7 +40,8 @@ class Database:
 
             # Opening the asscociated file
             data = open(data_file)
-            contents = csv.reader(data)
+            contents = csv.reader(data, )
+            next(contents)
 
             # Importing the contents of the file the associated table
             cursor.executemany(insert_statement, contents)
