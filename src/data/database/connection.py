@@ -5,7 +5,7 @@ import csv
 from src.data.database.statements import DatabaseSetup
 
 class Database:
-    def __init__(self, db_name) -> None:
+    def __init__(self, db_name: str) -> None:
         self.db_name = db_name
 
     def create_db(self,):
@@ -31,9 +31,9 @@ class Database:
         cursor = conn.cursor()
 
         for table in DatabaseSetup().all_tables():
-            create_statement = table.get('create_query')
-            data_file = f"src/data/raw_data/{table.get('file')}"
-            insert_statement = table.get('insert_query')
+            create_statement: str = table.get('create_query')
+            data_file: str = f"src/data/raw_data/{table.get('file')}"
+            insert_statement: str = table.get('insert_query')
 
             # Creating the table into the database
             cursor.execute(create_statement, '')
