@@ -2,42 +2,63 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 
-<body>
+<body style="font-family:arial, sans-serif">
+    <nav>
 
-    <section class="">
-        <h1></h1>
-    </section>
-    <section>
+    </nav>
+
+    <section class="dashboard">
         <div class="filters">
-            <div>
-                <select name=colours method="GET" action="/">
-                    {% for product in data['product_category'].unique() %}
-                    <option value="{{ product }}" SELECTED>{{ product }}</option>"
-                    {% endfor %}
-                </select>
+            <select id="mySelect" onchange="sendSelectedValue()">
+                <option value="all">All</option>
+                {% for year in filters['year'] %}
+                <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </select>
+
+            <script>
+                function sendSelectedValue() {
+                    var select = document.getElementById("mySelect");
+                    var selectedValue = select.value;
+                    if (selectedValue != "") {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/her");
+                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        xhr.send("year=" + selectedValue);
+                    }
+                }
+            </script>
+        </div>
+        </div>
+
+        <div class="cards-container">
+            <div class="cards-child">
+                <span>Total Sales</span>
+                <h3>{{ card['sales'] }}</h3>
             </div>
+            <div class="cards-child">
+                <span>Total Orders</span>
+                <h3>{{ card['orders'] }}</h3>
+            </div>
+            <div class="cards-child">
+                <span> </span>
+                <h3> 20000 </h3>
+            </div>
+        </div>
 
 
+        <div id="plot1">
+            <script>
+                var plot1_data = {{ product_plot| safe }};
+                Plotly.newPlot('plot1', plot1_data.data, plot1_data.layout);
+            </script>
         </div>
-        <div id='chart' class='chart' ”>
-            <div></div>
-        </div>
+
     </section>
-
-
-
-
 </body>
-
-
-
-<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-<script type='text/javascript'>
-  var graphs = {{ graphJSON | safe }};
-  Plotly.plot('chart',graphs,{});
-</script> -->
 
 </html>

@@ -1,3 +1,25 @@
 body {
-    background-color: azure;
+    background-color: white;
 }
+
+#plot1 {
+    width: 40%;
+    height: auto;
+}
+
+.cards-container {
+    margin-top: 6%;
+    display: flex;
+    width: 40%;
+}
+
+.cards-child {
+    text-align: center;
+    flex: 1;
+    border: 2px solid cadetblue;
+    margin-right: 20px;
+}
+
+/* .cards-child:first-child {
+    margin-right: 20px;
+} */
