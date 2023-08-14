@@ -1,64 +1,46 @@
 <!doctype html>
 <html>
-
 <head>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 
 <body style="font-family:arial, sans-serif">
-    <nav>
 
-    </nav>
+  <h1>ECOMMERCE DATA</h1>
 
-    <section class="dashboard">
-        <div class="filters">
-            <select id="mySelect" onchange="sendSelectedValue()">
-                <option value="all">All</option>
-                {% for year in filters['year'] %}
-                <option value="{{ year }}">{{ year }}</option>
-                {% endfor %}
-            </select>
+  <div class="filters">
 
-            <script>
-                function sendSelectedValue() {
-                    var select = document.getElementById("mySelect");
-                    var selectedValue = select.value;
-                    if (selectedValue != "") {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "/her");
-                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                        xhr.send("year=" + selectedValue);
-                    }
-                }
-            </script>
-        </div>
-        </div>
-
-        <div class="cards-container">
-            <div class="cards-child">
-                <span>Total Sales</span>
-                <h3>{{ card['sales'] }}</h3>
-            </div>
-            <div class="cards-child">
-                <span>Total Orders</span>
-                <h3>{{ card['orders'] }}</h3>
-            </div>
-            <div class="cards-child">
-                <span> </span>
-                <h3> 20000 </h3>
-            </div>
-        </div>
+  </div>
 
 
-        <div id="plot1">
-            <script>
-                var plot1_data = {{ product_plot| safe }};
-                Plotly.newPlot('plot1', plot1_data.data, plot1_data.layout);
-            </script>
-        </div>
+  <div class="cards"> 
 
-    </section>
+    <div class="totalOrders card-box">
+        {{ card['orders'] }}
+    </div>
+    <div class="totalSales card-box">
+        {{ card['sales'] }}
+    </div>
+
+  </div>
+
+
+  <div id='charts' class='charts'>
+
+    <div class='productChart' id='productChart'>  </div>
+
+  </div>
+
+
+
 </body>
 
+
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+    var graphs = {{ product_plot | safe }};
+    Plotly.plot('productChart', graphs, {});
+</script>
 </html>

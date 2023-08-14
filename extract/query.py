@@ -13,7 +13,8 @@ class ExtractionQueries:
 
     def top_products_script(self) -> str:
         return f""" SELECT pt.product_category_name_english AS product_name, 
-                            COUNT(oi.product_id) AS 'number_ordered'  FROM order_items oi
+                            COUNT(oi.product_id) AS 'number_ordered' 
+                    FROM order_items oi
                     LEFT JOIN products p on p.id = oi.product_id
                     LEFT JOIN product_category_name_translation pt ON p.category_name = pt.product_category_name
                     LEFT JOIN orders o ON o.id = oi.order_id
