@@ -22,6 +22,17 @@ class ExtractionQueries:
                     GROUP BY p.category_name
                     ORDER BY 2 DESC 
                     LIMIT 10 """
+    
+    def payment_types(self)-> str:  #pie chart
+        return f""" SELECT payment_type, count(*)  
+                    FROM order_payments
+                    GROUP BY payment_type """
+    
+    def monthly_sales(self) -> str:
+        return """  """
+    
+    def order_growth_script(self) -> str:
+        return """  """
 
 
     def total_sales_script(self) -> str:
@@ -38,6 +49,8 @@ class ExtractionQueries:
     def number_products_sold() -> str:
         return """ """
     
+    def min_delivery_period(self) -> str:
+        return """ """
     
-    def order_growth_script(self) -> str:
-        return """  """
+    
+    
