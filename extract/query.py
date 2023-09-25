@@ -23,18 +23,23 @@ class ExtractionQueries:
                     ORDER BY 2 DESC 
                     LIMIT 10 """
     
+    def top_state_revenue_script(self):
+        return f""" SELECT c.state, sum(payment_value) AS revenue 
+                    FROM order_payments op 
+                        LEFT JOIN orders o ON o.id = op.order_id
+                        LEFT JOIN customer c ON c.id = o.customer_id
+                    GROUP BY c.state 
+                    ORDER BY 2 DESC 
+                    LIMIT 10 """
+    
     def payment_types(self)-> str:  #pie chart
         return f""" SELECT payment_type, count(*)  
                     FROM order_payments
                     GROUP BY payment_type """
     
-    def monthly_sales(self) -> str:
-        return """  """
+    def total_sellers_script(self)  -> str:
+        return """ """
     
-    def order_growth_script(self) -> str:
-        return """  """
-
-
     def total_sales_script(self) -> str:
         return """ SELECT SUM(payment_value) AS 'sales' FROM order_payments op 
                     LEFT JOIN orders o ON o.id = op.order_id  """
@@ -45,6 +50,15 @@ class ExtractionQueries:
     
     def total_delivered_order_script(self) -> str:
         return """ SELECT COUNT(id) AS 'orders' FROM orders WHERE order_status = 'delivered' """
+    
+    def total_customers_script(self) -> str:
+        return """ SELECT count(id) AS customers FROM customer """
+    
+    def monthly_sales(self) -> str:
+        return """  """
+    
+    def order_growth_script(self) -> str:
+        return """  """
     
     def number_products_sold() -> str:
         return """ """
