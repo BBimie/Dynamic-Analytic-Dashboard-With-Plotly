@@ -12,16 +12,15 @@ class ExtractionQueries:
         self.yearClause = yearClause
 
     def top_products_script(self) -> str:
-        return f""" SELECT pt.product_category_name_english AS product_name, 
-                            COUNT(oi.product_id) AS 'number_ordered' 
+        return f""" SELECT pt.product_category_name_english AS 'Product Name', 
+                            SUM(oi.price)  AS 'Revenue' 
                     FROM order_items oi
                     LEFT JOIN products p on p.id = oi.product_id
                     LEFT JOIN product_category_name_translation pt ON p.category_name = pt.product_category_name
                     LEFT JOIN orders o ON o.id = oi.order_id
-                    { self.yearClause }
-                    GROUP BY p.category_name
-                    ORDER BY 2 DESC 
-                    LIMIT 10 """
+                    GROUP BY 1
+                    ORDER BY 2 DESC
+                    LIMIT 10  """
     
     def top_state_revenue_script(self):
         return f""" SELECT c.state, sum(payment_value) AS revenue 
@@ -33,7 +32,7 @@ class ExtractionQueries:
                     LIMIT 10 """
     
     def payment_types(self)-> str:  #pie chart
-        return f""" SELECT payment_type, count(*)  
+        return f""" SELECT payment_type as 'Payment Type', count(*) AS 'Number of Entries'
                     FROM order_payments
                     GROUP BY payment_type """
     
@@ -46,7 +45,7 @@ class ExtractionQueries:
 
     def total_order_script(self) -> str:
         return f""" SELECT COUNT(id) AS 'orders' FROM orders
-                    {self.yearClause}  """
+                      """
     
     def total_delivered_order_script(self) -> str:
         return """ SELECT COUNT(id) AS 'orders' FROM orders WHERE order_status = 'delivered' """
@@ -54,11 +53,21 @@ class ExtractionQueries:
     def total_customers_script(self) -> str:
         return """ SELECT count(id) AS customers FROM customer """
     
+    def total_product_script(self) -> str:
+        return """ SELECT count(id) AS product FROM products """
+    
     def monthly_sales(self) -> str:
         return """  """
     
-    def order_growth_script(self) -> str:
-        return """  """
+    def revenue_growth_script(self) -> str:
+        return """ SELECT strftime('%Y-%m', order_approved_at) AS Date,
+                   SUM(payment_value) AS Revenue,
+                   COUNT(o.id) AS 'Order Quantity'
+            FROM orders o
+            JOIN order_payments op ON op.order_id = o.id
+            WHERE DATE(order_approved_at) IS NOT NULL
+            GROUP BY Date
+            ORDER BY Date """
     
     def number_products_sold() -> str:
         return """ """

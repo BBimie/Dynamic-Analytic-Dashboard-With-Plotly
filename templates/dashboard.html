@@ -10,11 +10,6 @@
 
   <h1>ECOMMERCE DATA</h1>
 
-  <div class="filters">
-
-  </div>
-
-
   <div class="cards"> 
 
     <div class="totalOrders card-box">
@@ -23,6 +18,12 @@
     <div class="totalSales card-box">
         {{ card['sales'] }}
     </div>
+    <div class="totalCustomers card-box">
+      {{ card['customers'] }}
+    </div>
+    <div class="totalProducts card-box">
+      {{ card['products'] }}
+    </div>
 
   </div>
 
@@ -30,7 +31,12 @@
   <div id='charts' class='charts'>
 
     <div class='productChart' id='productChart'>  </div>
+    <div class="paymentChart" id="paymentChart"> </div>
 
+  </div>
+
+  <div id='charts2' class='charts2'>
+    <div class="revenueGrowthChart" id="revenueGrowthChart"> </div>
   </div>
 
 
@@ -42,5 +48,11 @@
 <script type='text/javascript'>
     var graphs = {{ product_plot | safe }};
     Plotly.plot('productChart', graphs, {});
+
+    var graphs2 = {{ payment_type_plot | safe }};
+    Plotly.plot('paymentChart', graphs2, {});
+
+    var graphs3 = {{ revenue_growth_plot | safe }};
+    Plotly.plot('revenueGrowthChart', graphs3, {});
 </script>
 </html>
